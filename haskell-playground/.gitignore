@@ -1,0 +1,4 @@
+# Haskell Stack GitIgnore
+.stack-work/
+.ghci
+.stack-work/install/

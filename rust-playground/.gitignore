@@ -1,0 +1,14 @@
+# Rust playground .gitignore
+
+# Rust/Cargo
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Editor
+.vscode/
+.idea/
+
+# Misc
+*.swp
+*~

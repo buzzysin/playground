@@ -1,0 +1,45 @@
+# Root .gitignore - ignore common editor, OS, and build artifacts
+
+# macOS
+.DS_Store
+
+# swap/temp/editor
+*.swp
+*~
+*.bak
+
+# VS Code
+.vscode/
+
+# Build directories
+build/
+target/
+.stack-work/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven wrapper jar should be tracked (do NOT ignore .mvn/wrapper/maven-wrapper.jar)
+
+# LaTeX build artifacts (from .docs folder)
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.pdf
+
+# Node
+node_modules/
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Other
+.vagrant/
+.idea/
+

@@ -1,0 +1,20 @@
+# Prolog playground .gitignore
+
+# SWI-Prolog and general
+*.qlf
+*.qlf.lock
+*.po
+*.out
+*.log
+
+# Emacs/Vim
+*~
+*.swp
+
+# Build / tmp
+build/
+.plt/
+
+# Editor
+.vscode/
+.idea/

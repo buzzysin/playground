@@ -1,0 +1,18 @@
+# SQL playground .gitignore
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+
+# Dumps and exports
+*.sql.gz
+
+# Editor
+.vscode/
+.idea/
+
+# Temp
+*~
+*.swp

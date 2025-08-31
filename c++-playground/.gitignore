@@ -1,0 +1,23 @@
+# C++ playground .gitignore
+
+# Build directories
+build/
+cmake-build-debug/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiled objects and binaries
+*.o
+*.obj
+*.exe
+*.out
+
+# IDE files
+.vscode/
+.idea/
+
+# Misc
+*.dSYM
+
