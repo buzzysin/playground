@@ -1,0 +1,40 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.37.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           haskell-playground
+version:        0.1.0.0
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+
+library
+  exposed-modules:
+      Quicksort
+      SimpleServer
+  other-modules:
+      Paths_haskell_playground
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , network >=2.8
+  default-language: Haskell2010
+
+executable haskell-playground
+  main-is: Main.hs
+  other-modules:
+      Quicksort
+      SimpleServer
+      Paths_haskell_playground
+  hs-source-dirs:
+      app
+      src
+  ghc-options: -O2
+  build-depends:
+      base
+    , haskell-playground
+    , network >=2.8
+  default-language: Haskell2010

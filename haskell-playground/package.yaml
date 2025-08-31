@@ -1,0 +1,22 @@
+name: haskell-playground
+version: 0.1.0.0
+dependencies:
+  - base >= 4.7 && < 5
+  - network >= 2.8
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Quicksort
+    - SimpleServer
+
+executables:
+  haskell-playground:
+    main: Main.hs
+    source-dirs: 
+      - app
+      - src
+    ghc-options: -O2
+    dependencies:
+      - haskell-playground
+      - base
