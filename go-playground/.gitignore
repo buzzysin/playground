@@ -1,0 +1,16 @@
+# Go
+/bin/
+/pkg/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+
+# Editor
+.vscode/
+.idea/
+
+# Vendor
+/vendor/
+
