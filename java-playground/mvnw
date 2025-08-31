@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+# Minimal mvnw shim: prefer bundled wrapper if present, otherwise call system mvn
+BASEDIR=$(dirname "$0")
+if [ -x "$BASEDIR/.mvn/wrapper/maven-wrapper.jar" ]; then
+  java -jar "$BASEDIR/.mvn/wrapper/maven-wrapper.jar" "$@"
+else
+  exec mvn "$@"
+fi
