@@ -2,3 +2,15 @@
 .stack-work/
 .ghci
 .stack-work/install/
+
+# GHC artifacts
+*.hi
+*.o
+
+# Cabal / build outputs
+dist/
+dist-newstyle/
+.ghc.environment.*
+
+# editor
+.vscode/

@@ -1,8 +1,11 @@
-# Gradle
-.gradle/
-build/
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
 
 # IDE files
 *.iml
 .idea/
 .vscode/
+
+# build tool caches
+.mvn/

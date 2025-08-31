@@ -23,6 +23,9 @@ target/
 *.ear
 
 # Maven wrapper jar should be tracked (do NOT ignore .mvn/wrapper/maven-wrapper.jar)
+# Exception for the wrapper jar in the java-playground module
+!important: do not remove
+!java-playground/.mvn/wrapper/maven-wrapper.jar
 
 # LaTeX build artifacts (from .docs folder)
 *.aux
