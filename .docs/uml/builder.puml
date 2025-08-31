@@ -1,0 +1,8 @@
+@startuml
+
+abstract IBuilder<T> {
+    +T build()
+}
+
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml visitor
+
+interface IVisitor<I, O> {
+    +O visit(I)
+}
+interface IVisited<I, O> {
+    +O accept(IVisitor<I, O>)
+}
+
+class Move {
+  +int x
+  +int y
+}
+
+class ChessBoard {
+  +List<Move> getMoves(IChessPiece)
+  -List<IChessPiece> pieces
+}
+' ChessBoard --o Move
+ChessBoard --o IChessPiece
+ChessBoard --o CaptureVisitor
+ChessBoard --o MoveVisitor
+
+class MoveVisitor <<IVisitor<(Pawn|Rook|Knight, ChessBoard), List<Move>>>> implements IVisitor {
+  +List<Move> visit(Pawn, ChessBoard)
+  +List<Move> visit(Rook, ChessBoard)
+  +List<Move> visit(Knight, ChessBoard)
+  +...
+}
+class CaptureVisitor <<IVisitor<Pawn|Rook|Knight, bool>>> implements IVisitor {
+  +bool visit(Pawn)
+  +bool visit(Rook)
+  +bool visit(Knight)
+  +...
+}
+
+' implements both required IVisited interfaces
+abstract IChessPiece {
+  +int getRank()
+
+  +List<Move> getMoves(ChessBoard)
+  +bool canCapture(IChessPiece)
+
+  -int rank
+}
+
+class Pawn implements IChessPiece, IVisited {
+  +List<Move> accept(IVisitor<Pawn, List<Move>>)
+  +bool accept(IVisitor<Pawn, bool>)
+}
+class Rook implements IChessPiece, IVisited {
+  +List<Move> accept(IVisitor<Rook, List<Move>>)
+  +bool accept(IVisitor<Rook, bool>)
+}
+class Knight implements IChessPiece, IVisited {
+  +List<Move> accept(IVisitor<Knight, List<Move>>)
+  +bool accept(IVisitor<Knight, bool>)
+}
+
+@enduml

@@ -13,6 +13,7 @@
 *.snm
 *.synctex.gz
 *.toc
+*.vrb
 
 # PDFs and generated outputs
 *.pdf

@@ -1,0 +1,52 @@
+@startuml strategy_sorter
+
+abstract IStrategy<I, O> {
+    +O run(I)
+}
+class SorterStrategy<IStrategy<List, List>> {}
+class Sorter {
+    +List sort(List)
+}
+
+SorterStrategy -left-|> IStrategy
+QuickSort --|> SorterStrategy
+MergeSort --|> SorterStrategy
+InsertionSort --|> SorterStrategy
+SorterStrategy --o Sorter
+
+@enduml
+
+@startuml strategy_renderer
+
+abstract IStrategy<I, O> {
+    +O run(I)
+}
+
+class Screen {
+  +void draw()
+}
+
+class Engine {
+  +void render()
+  +IRendererStrategy renderer
+  +Screen screen
+}
+
+Engine --o Screen
+Engine --o IRendererStrategy  
+
+abstract IRendererStrategy <<IStrategy<Screen, Screen>> implements IStrategy {
+    +Screen drawFrame(Screen)
+}
+
+class VSyncStrategy implements IRendererStrategy {
+    +Screen drawFrame(Screen)
+}
+class VariableFrameRateStrategy implements IRendererStrategy {
+    +Screen drawFrame(Screen)
+}
+class FixedFrameRateStrategy implements IRendererStrategy {
+    +Screen drawFrame(Screen)
+}
+
+@enduml

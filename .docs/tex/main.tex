@@ -1,0 +1,162 @@
+\documentclass{article}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage[svgnames]{xcolor}
+\definecolor{LightGray}{gray}{0.95}
+
+\setminted{
+  frame=lines,
+  framesep=2mm,
+  baselinestretch=1.2,
+  bgcolor=LightGray,
+  fontsize=\footnotesize,
+  linenos=false
+}
+\usemintedstyle{perldoc}
+
+\title{Programming paradigms: High \& Low level}
+\author{taharka.okai}
+\date{August 2025}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Short tour: contrast imperative vs functional, then cover architecture-level patterns (ECS) and design-level patterns (Dependency Injection and common design patterns). Includes small code examples from the repo.
+\end{abstract}
+
+\section*{Outline}
+\begin{itemize}
+  \item Quick definitions and tradeoffs
+  \item Imperative / Procedural
+  \item Functional
+  \item Declarative / Logic
+  \item Architectural patterns: ECS
+  \item Design patterns: OOP basics, Adapter, Strategy, Builder, Factory, Observer
+  \item Monadic programming and concurrency
+  \item Summary and live demos
+\end{itemize}
+
+\section{Imperative}
+\begin{itemize}
+  \item Mutable state, step-by-step commands
+  \item Maps closely to machine model; used in C/C++ for low-level control
+\end{itemize}
+
+\pagebreak
+
+\section{Functional}
+\begin{itemize}
+  \item Pure functions, immutability, composition
+  \item Easier reasoning, safer concurrency, testability
+\end{itemize}
+
+\subsection*{Example: quicksort (Haskell)}
+\inputminted[linenos,fontsize=\small]{haskell}{../../haskell-playground/src/Quicksort.hs}
+
+\pagebreak
+
+\section{Declarative / Logic (Prolog)}
+Declarative programming expresses "what" rather than "how". Prolog shows rule-based search and pattern matching.
+
+\subsection*{Example: whodunnit}
+\inputminted[linenos,fontsize=\small]{prolog}{../../prolog-playground/src/whodunnit.pl}
+
+\subsection*{Example: main}
+\inputminted[linenos,fontsize=\small]{prolog}{../../prolog-playground/src/main.pl}
+
+\pagebreak
+
+\section{Entity-Component-System (ECS)}
+\begin{itemize}
+  \item Entities: ids
+  \item Components: plain data attached to entities
+  \item Systems: behavior operating on components
+  \item Strengths: decoupling, data-oriented performance
+\end{itemize}
+
+\pagebreak
+
+\section{Design Patterns}
+Common categories: creational, structural, behavioral.
+
+\subsection{OOP basics}
+\begin{itemize}
+  \item Inheritance — reuse and subtype relationships
+  \item Encapsulation — hide implementation behind interfaces
+  \item Composition — build behavior by composing objects (often preferred)
+  \item Polymorphism — uniform interface for different concrete types
+\end{itemize}
+
+\pagebreak
+
+\subsection{Adapter}
+Converts one interface to another expected by clients. Useful for integrating legacy APIs.
+
+\pagebreak
+
+\subsection{Strategy}
+Encapsulates algorithms behind a common interface; swap implementations at runtime.
+
+\pagebreak
+
+\subsection{Builder}
+Construct complex objects step-by-step; good for immutable objects with many options.
+
+\pagebreak
+
+\subsection{Factory}
+Encapsulate object creation to decouple callers from concrete classes.
+
+\pagebreak
+
+\subsection{Observer / Observable}
+Publish/subscribe eventing pattern; decouples producers and consumers.
+
+\pagebreak
+
+\section{Monadic programming}
+\begin{itemize}
+  \item Monad = composable computation context (bind/return)
+  \item Enables chaining/pipeline composition using `>>=` and `do` notation
+  \item Examples: Maybe/Option for safe chaining, IO for sequencing effects
+\end{itemize}
+
+\subsection*{Example (Haskell: Maybe chain)}
+\begin{minted}[fontsize=\small]{haskell}
+safeHead :: [a] -> Maybe a
+safeHead []    = Nothing
+safeHead (x:_) = Just x
+
+example = Just [1,2,3] >>= safeHead >>= (\x -> Just (x*2))
+\end{minted}
+
+\pagebreak
+
+\section{Concurrency (overview)}
+\begin{itemize}
+  \item Shared-memory threads (locks, atomics) — fine-grained control, risk of races
+  \item Message-passing / Actors — isolation and fault tolerance (Erlang/Akka)
+  \item Async/await (futures/promises) — structured concurrency for IO-heavy workloads
+\end{itemize}
+
+\pagebreak
+
+\section{Summary}
+\begin{itemize}
+  \item Choose paradigms based on problem constraints: performance, clarity, concurrency
+  \item Combine paradigms where helpful: functional cores inside imperative apps, ECS for game architecture, DI for modularity
+\end{itemize}
+
+\pagebreak
+
+\section*{Try it live}
+\begin{itemize}
+  \item Show Haskell quicksort vs an imperative version
+  \item Run a Prolog query to demonstrate declarative search
+  \item Show swapping implementations in Java via DI or factories
+\end{itemize}
+
+\end{document}

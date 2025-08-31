@@ -1,0 +1,17 @@
+@startuml factory
+
+abstract IFactory<T> {
+    +T create()
+}
+
+abstract IVehicle {}
+
+class Motorcycle implements IVehicle {}
+class Car implements IVehicle {}
+class Truck implements IVehicle {}
+
+class ToyotaFactory <<IFactory<IVehicle>>> {
+    +IVehicle create()
+}
+
+@enduml

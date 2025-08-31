@@ -1,0 +1,32 @@
+@startuml
+
+abstract IAdaptor<I, O> {
+    +I adapt(O)
+}
+
+class TwoPinPlug {
+    +int live
+    +int neutral
+}
+
+class ThreePinPlug {
+    +int live
+    +int neutral
+    +int ground
+}
+
+class TwoPinSocket {
+    +int accept(TwoPinPlug)
+}
+
+class ThreePinSocket {
+    +int accept(ThreePinPlug)
+}
+
+class ThreeToTwoPinSocketAdaptor <<IAdaptor<ThreePinPlug, int>>> {
+    +int accept(ThreePinPlug)
+}
+
+ThreeToTwoPinSocketAdaptor --|> IAdaptor
+
+@enduml
