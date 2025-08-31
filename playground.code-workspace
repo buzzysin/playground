@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": ".playground"
+		},
+		{
+			"path": ".docs"
+		},
+		{
+			"path": "haskell-playground"
+		},
+		{
+			"path": "prolog-playground"
+		},
+		{
+			"path": "java-playground"
+		},
+		{
+			"path": "go-playground"
+		},
+		{
+			"path": "rust-playground"
+		}
+	],
+	"settings": {}
+}
