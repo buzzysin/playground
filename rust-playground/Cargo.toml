@@ -1,0 +1,12 @@
+[package]
+name = "rust_playground"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "rust_playground"
+path = "src/lib.rs"
+
+[[bin]]
+name = "rust-demo"
+path = "src/main.rs"
