@@ -1,0 +1,173 @@
+@startuml dependency_examples
+
+class App {
+  +App()
+  +storeFile()
+  +savePhoto()
+  +notifyUsers()
+}
+
+class DatabaseService {
+  +connect()
+  +disconnect()
+}
+class FileService {
+  +storeFile()
+}
+class PhotoService {
+  -fileService: FileService
+  -databaseService: DatabaseService
+  +savePhoto()
+  +getPhoto()
+}
+class NotificationService {
+  -mailService: MailService
+  -databaseService: DatabaseService
+  +notifyUsers()
+}
+class MailService {
+  -databaseService: DatabaseService
+  +sendEmail()
+}
+class PhoneService {
+  -databaseService: DatabaseService
+  +sendSMS()
+}
+
+@enduml
+
+@startuml dependency_bad
+title Bad: Tight coupling (concrete dependencies)
+
+class App {
+  +App()
+  +storeFile()
+  +savePhoto()
+  +notifyUsers()
+}
+
+class DatabaseService {
+  +connect()
+  +disconnect()
+}
+class FileService {
+  +storeFile()
+}
+class PhotoService {
+  -fileService: FileService
+  -databaseService: DatabaseService
+  +savePhoto()
+  +getPhoto()
+}
+class NotificationService {
+  -mailService: MailService
+  -databaseService: DatabaseService
+  +notifyUsers()
+}
+class MailService {
+  -databaseService: DatabaseService
+  +sendEmail()
+}
+class PhoneService {
+  -databaseService: DatabaseService
+  +sendSMS()
+}
+
+' Concrete composition: classes own/construct concrete services -> tight coupling
+PhotoService *-- FileService
+PhotoService *-- DatabaseService
+NotificationService *-- MailService
+NotificationService *-- DatabaseService
+MailService *-- DatabaseService
+PhoneService *-- DatabaseService
+App *-- PhotoService
+App *-- NotificationService
+
+note right of PhotoService
+  PhotoService directly constructs or
+  owns concrete FileService / DatabaseService
+  (hard to swap, test, or mock)
+end note
+
+@enduml
+
+@startuml dependency_good
+title Good: Dependency Injection with interfaces and a container
+
+' Interfaces / abstractions
+interface IDatabaseService {
+  +connect()
+  +disconnect()
+}
+interface IFileService {
+  +storeFile()
+}
+interface IMailService {
+  +sendEmail()
+}
+interface IPhoneService {
+  +sendSMS()
+}
+
+' Concrete implementations
+class DatabaseServiceImpl {
+  +connect()
+  +disconnect()
+}
+class FileServiceImpl {
+  +storeFile()
+}
+class MailServiceImpl {
+  +sendEmail()
+}
+class PhoneServiceImpl {
+  +sendSMS()
+}
+
+' Consumers depend on interfaces (constructor injection)
+class PhotoService {
+  -fileService: IFileService
+  -databaseService: IDatabaseService
+  +PhotoService(fileSvc: IFileService, db: IDatabaseService)
+  +savePhoto()
+}
+class NotificationService {
+  -mailService: IMailService
+  -databaseService: IDatabaseService
+  +NotificationService(mailSvc: IMailService, db: IDatabaseService)
+  +notifyUsers()
+}
+
+' App wiring / DI container
+class Container {
+  +resolvePhotoService(): PhotoService
+  +resolveNotificationService(): NotificationService
+}
+
+' Relationships: implementation -> interface (implements)
+DatabaseServiceImpl --|> IDatabaseService
+FileServiceImpl --|> IFileService
+MailServiceImpl --|> IMailService
+PhoneServiceImpl --|> IPhoneService
+
+' Consumers depend on abstractions (note constructor injection)
+PhotoService ..> IFileService : depends on
+PhotoService ..> IDatabaseService : depends on
+NotificationService ..> IMailService : depends on
+NotificationService ..> IDatabaseService : depends on
+
+' Container wires implementations to interfaces
+Container ..> DatabaseServiceImpl : creates
+Container ..> FileServiceImpl : creates
+Container ..> MailServiceImpl : creates
+Container ..> PhoneServiceImpl : creates
+Container ..> PhotoService : wires (injected)
+Container ..> NotificationService : wires (injected)
+
+note right of Container
+  The DI container or App main constructs concrete
+  impls and injects them into services (constructor).
+  Swap/mocking and testing become easy.
+end note
+
+@enduml
