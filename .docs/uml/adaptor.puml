@@ -27,6 +27,10 @@ class ThreeToTwoPinSocketAdaptor <<IAdaptor<ThreePinPlug, int>>> {
     +int accept(ThreePinPlug)
 }
 
+TwoPinPlug --> TwoPinSocket
+ThreePinPlug --> ThreePinSocket
+ThreePinPlug --> ThreeToTwoPinSocketAdaptor
 ThreeToTwoPinSocketAdaptor --|> IAdaptor
+ThreeToTwoPinSocketAdaptor --> TwoPinSocket : adapts
 
 @enduml

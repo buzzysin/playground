@@ -141,12 +141,12 @@ do x <- y ; return x
 y >>= \x -> return x 
 \end{minted}
 
-
-
 \begin{minted}[fontsize=\small]{haskell}
-do x <- y ; return x
+  -- Monadic syntactic sugar
+
+do _ <- y ; z
 -- is the same as
-y >>= \x -> return x 
+y >> z -- the result of `y` is discarded
 \end{minted}
 
 \pagebreak

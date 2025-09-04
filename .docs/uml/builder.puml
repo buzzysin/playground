@@ -1,8 +1,32 @@
-@startuml
-
-abstract IBuilder<T> {
-    +T build()
+@startuml Builder
+title Builder pattern (IBuilder<T>)
+interface "IBuilder<T>" as IBuilder_T {
+    +build() : T
 }
 
+class House {
+    -windows: int
+    -doors: int
+    -garage: bool
+}
+
+class HouseBuilder {
+    -windows: int
+    -doors: int
+    -garage: bool
+    +new() : HouseBuilder
+    +windows(n:int) : HouseBuilder
+    +doors(n:int) : HouseBuilder
+    +garage(flag:bool) : HouseBuilder
+    +build() : House
+}
+
+class Director {
+    +construct_bungalow(b: IBuilder<House>) : House
+}
+
+IBuilder_T <|.. HouseBuilder
+Director ..> IBuilder_T : uses
+HouseBuilder --> House : builds
 
 @enduml

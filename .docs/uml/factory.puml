@@ -1,17 +1,32 @@
-@startuml factory
-
-abstract IFactory<T> {
-    +T create()
+@startuml Factory
+title Factory pattern (IFactory<T>)
+interface "IFactory<T>" as IFactory_T {
+    +create() : T
 }
 
-abstract IVehicle {}
+interface IVehicle {}
 
-class Motorcycle implements IVehicle {}
-class Car implements IVehicle {}
-class Truck implements IVehicle {}
-
-class ToyotaFactory <<IFactory<IVehicle>>> {
-    +IVehicle create()
+class Motorcycle {
+    +ride() : void
 }
+
+class Car {
+    +drive() : void
+}
+
+class Truck {
+    +haul() : void
+}
+
+
+class VehicleFactory {
+    +create(kind: String) : IVehicle
+}
+
+IFactory_T <|.. VehicleFactory
+VehicleFactory --> IVehicle : returns
+Motorcycle <|.. IVehicle
+Car <|.. IVehicle
+Truck <|.. IVehicle
 
 @enduml
