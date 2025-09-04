@@ -38,9 +38,12 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.5.1</version>
         <configuration>
           <mainClass>com.example.app.dependency.DependencyDemo</mainClass>
+          <!-- ensure the plugin uses the project's compile-time classes and includes reactor-built deps -->
+          <classpathScope>compile</classpathScope>
+          <includeProjectDependencies>true</includeProjectDependencies>
         </configuration>
       </plugin>
     </plugins>
