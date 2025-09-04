@@ -34,15 +34,20 @@ class CaptureVisitor <<IVisitor<Pawn|Rook|Knight, bool>>> implements IVisitor {
   +...
 }
 
+enum PieceType
+
 ' implements both required IVisited interfaces
 abstract IChessPiece {
   +int getRank()
+  +int getFile()
 
   +List<Move> getMoves(ChessBoard)
   +bool canCapture(IChessPiece)
 
-  -int rank
+  -PieceType type
 }
+
+PieceType --o IChessPiece
 
 class Pawn implements IChessPiece, IVisited {
   +List<Move> accept(IVisitor<Pawn, List<Move>>)

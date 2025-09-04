@@ -1,0 +1,147 @@
+@startuml ecs
+
+'
+' Entity-Component-System (ECS) architecture overview
+' - Entities are lightweight IDs that own components
+' - Components are plain data attached to entities
+' - Systems query component storage (often by archetype/sparse-set) and run logic
+' - Managers coordinate creation, destruction, and iteration
+'/
+
+interface IEntity {
+        +UUID getId()
+        +List<IComponent> getComponents()
+        +T getComponent(Type): IComponent
+}
+
+interface IComponent {
+        +IEntity getEntity()
+}
+
+interface ISystem {
+        +update(dt: float): void
+        +query(): List<IEntity>
+}
+
+' Managers and storage (common engine services)
+class EntityManager {
+    +createEntity(): IEntity
+    +destroyEntity(IEntity)
+    +getEntity(UUID): IEntity
+}
+
+class ComponentManager {
+    +addComponent(IEntity, IComponent)
+    +removeComponent(IEntity, Type)
+    +getComponents(Type): ComponentStorage
+}
+
+class SystemManager {
+    +registerSystem(ISystem)
+    +updateAll(dt: float)
+}
+
+class ComponentStorage<T> {
+    -T[] denseArray
+    -Map<EntityId, int> sparseIndex
+    +get(entityId): T
+    +iterate(): Iterator<T>
+}
+
+class Archetype {
+    -Set<Type> componentTypes
+    -ComponentStorage[] storages
+}
+
+' Example components (data only)
+class TransformComponent {
+    +float x
+    +float y
+    +float rotation
+    +IEntity getEntity()
+}
+
+class RenderComponent {
+    +Mesh mesh
+    +Material material
+    +IEntity getEntity()
+}
+
+class PhysicsComponent {
+    +float vx
+    +float vy
+    +float mass
+    +IEntity getEntity()
+}
+
+class AIComponent {
+    +State state
+    +IEntity getEntity()
+}
+
+' Entities (ID + component references)
+class Entity {
+    +UUID id
+    +Map<Type, IComponent> components
+    +getId(): UUID
+}
+
+class PlayerEntity {
+    +UUID id
+    +getId(): UUID
+}
+
+class EnemyEntity {
+    +UUID id
+    +getId(): UUID
+}
+
+' Systems (operate on components)
+class RenderSystem {
+    +update(dt: float)
+    // queries: TransformComponent + RenderComponent
+}
+
+class PhysicsSystem {
+    +update(dt: float)
+    // queries: TransformComponent + PhysicsComponent
+}
+
+class AISystem {
+    +update(dt: float)
+    // queries: AIComponent + TransformComponent
+}
+
+' Relationships
+EntityManager "1" *-- "0..*" Entity
+Entity "1" *-- "0..*" IComponent
+ComponentManager "1" *-- "0..*" ComponentStorage
+SystemManager "1" *-- "0..*" ISystem
+
+' Components are attached to Entities (composition)
+Entity o-- TransformComponent
+Entity o-- RenderComponent
+Entity o-- PhysicsComponent
+Entity o-- AIComponent
+
+' Systems depend on component storage (queries)
+RenderSystem ..> ComponentStorage : uses
+PhysicsSystem ..> ComponentStorage : uses
+AISystem ..> ComponentStorage : uses
+
+' Optionally show archetype grouping and sparse-set storage
+Archetype ..> ComponentStorage
+ComponentStorage ..> Entity : maps indices
+
+' Notes
+note right of ComponentStorage
+    Typical implementation: dense arrays + sparse index (sparse set)
+    Fast iteration, cache-friendly, contiguous data for each component type
+end note
+
+note left of SystemManager
+    Systems should be stateless processors that operate on component data
+    Managers handle lifecycle and efficient queries
+end note
+
+@enduml

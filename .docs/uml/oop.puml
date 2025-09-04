@@ -1,0 +1,104 @@
+@startuml Abstraction
+title Abstraction — abstract base class and concrete implementations
+abstract class Shape {
+	+area() : float
+	+perimeter() : float
+}
+
+class Circle {
+	-radius: float
+	+Circle(r: float)
+	+area() : float
+	+perimeter() : float
+}
+
+class Rectangle {
+	-width: float
+	-height: float
+	+Rectangle(w: float, h: float)
+	+area() : float
+	+perimeter() : float
+}
+
+Shape <|-- Circle
+Shape <|-- Rectangle
+
+note right
+	The abstract `Shape` defines the contract (abstraction).
+	`Circle` and `Rectangle` provide concrete implementations.
+end note
+@enduml
+
+@startuml Encapsulation
+title Encapsulation — hide internal state, expose operations
+class BankAccount {
+	-balance: Money
+	-accountNumber: String
+	+BankAccount(acct: String)
+	+deposit(amount: Money) : void
+	+withdraw(amount: Money) : boolean
+	+getBalance() : Money
+}
+
+note right
+	`balance` is private and mutated only via methods, protecting invariants.
+end note
+@enduml
+
+@startuml Polymorphism
+title Polymorphism — same interface, different runtime behavior
+interface Renderer {
+	+render(scene: Scene) : void
+}
+
+class OpenGLRenderer {
+	+render(scene: Scene) : void
+}
+
+class SoftwareRenderer {
+	+render(scene: Scene) : void
+}
+
+class Scene {
+	-renderer: Renderer
+	+setRenderer(r: Renderer) : void
+	+draw() : void
+}
+
+Renderer <|.. OpenGLRenderer
+Renderer <|.. SoftwareRenderer
+Scene *-- Renderer : uses
+
+note right
+	Code calls `scene.draw()` without knowing which concrete renderer is used.
+	This is runtime polymorphism via an interface/reference.
+end note
+@enduml
+
+@startuml Inheritance
+title Inheritance — shared behavior and specialization
+class Vehicle {
+	-make: String
+	-model: String
+	+start() : void
+	+stop() : void
+}
+
+class Car {
+	-numDoors: int
+	+openTrunk() : void
+}
+
+class Truck {
+	-payloadCapacity: float
+	+dumpLoad() : void
+}
+
+Vehicle <|-- Car
+Vehicle <|-- Truck
+
+note right
+	`Car` and `Truck` inherit common operations from `Vehicle`
+	and add specialized fields/behavior.
+end note
+@enduml

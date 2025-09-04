@@ -133,6 +133,22 @@ safeHead (x:_) = Just x
 example = Just [1,2,3] >>= safeHead >>= (\x -> Just (x*2))
 \end{minted}
 
+\begin{minted}[fontsize=\small]{haskell}
+-- Monadic syntactic sugar
+
+do x <- y ; return x
+-- is the same as
+y >>= \x -> return x 
+\end{minted}
+
+
+
+\begin{minted}[fontsize=\small]{haskell}
+do x <- y ; return x
+-- is the same as
+y >>= \x -> return x 
+\end{minted}
+
 \pagebreak
 
 \section{Concurrency (overview)}
