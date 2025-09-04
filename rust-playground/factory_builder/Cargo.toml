@@ -1,0 +1,11 @@
+[package]
+name = "factory_builder"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "factory_builder"
+path = "src/lib.rs"
+
+[dev-dependencies]
+serde = { version = "1.0", features = ["derive"] }
