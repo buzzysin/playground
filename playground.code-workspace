@@ -23,5 +23,7 @@
 			"path": "rust-playground"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
 }
