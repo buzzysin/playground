@@ -6,8 +6,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(LIB_HEADERS 
   src/quicksort.hpp
+  src/ecs/ecs.hpp
 )
 set(LIB_SOURCES 
+  src/ecs/ecs.cpp
 )
 
 set(APP_HEADERS)
