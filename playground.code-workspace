@@ -21,6 +21,9 @@
 		},
 		{
 			"path": "rust-playground"
+		},
+		{
+			"path": "c++-playground"
 		}
 	],
 	"settings": {

@@ -17,9 +17,17 @@ set(APP_SOURCES
   src/main.cpp
 )
 
+set(STRATEGY_SOURCES
+  src/main_strategy.cpp
+)
+
 add_library(libc++-playground STATIC ${LIB_HEADERS} ${LIB_SOURCES})
 target_include_directories(libc++-playground PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 add_executable(c++-playground ${APP_SOURCES} ${APP_HEADERS})
 target_link_libraries(c++-playground PRIVATE libc++-playground)
 target_include_directories(c++-playground PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+add_executable(strategy-demo ${STRATEGY_SOURCES})
+target_link_libraries(strategy-demo PRIVATE libc++-playground)
+target_include_directories(strategy-demo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
